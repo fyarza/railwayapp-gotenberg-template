@@ -6,8 +6,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 2cm;
             font-size: 12px;
+            margin: auto 20px;
         }
         
         h1, h2 {
@@ -22,11 +22,27 @@
           font-weight: bold;
         }
 
+        .titulo-tesis{
+          font-size:14px;
+          font-weight:bold;
+          line-height:1.5;
+           border-bottom: 0.8px solid #000;
+          display: inline-block;
+          min-width: 100%;
+          margin: 10px 0;
+        }
+
         .header-content{
           display:flex;
           justify-content:space-between;
           align-items:center;
           margin-bottom: 40px;
+        }
+        .fecha{
+          display:flex;
+          align-items:center;
+          justify-content:flex-end
+            
         }
         
         .section {
@@ -88,6 +104,9 @@
       width="80px">
     </div>
   </div>
+  <div class="fecha">
+    <span>Naguanagua, {{ $now.format('dd/MM/yyyy') }}</span>
+  </div>
 
     <div class="section">
         <h3>A. Datos del(los) Estudiante(s)</h3>
@@ -97,20 +116,24 @@
             <th>C.I.</th>
             <th>Teléfono / E-mail</th>
           </tr>
-          <tr>
-            <td>Nombre: <span>{{$json.nombre_estudiante_1}}</span></td>
-            <td>C.I.: <span>{{$json.ci_estudiante_1}}</span></td>
+
+          {{ $json.tesistas.estudiantes.map(item => `
+            <tr>
+            <td>Nombre: <span>${item.nombre}</span></td>
+            <td>C.I.: <span>${item.ci}</span></td>
             <td>
               <div>
                 <span>Teléfono: </span>
-                <span>{{$json.telefono_estudiante_1}}</span>
+                <span>${item.telefono}</span>
               </div>
               <div>
                 <span>E-mail: </span>
-                <span>{{$json.email_estudiante_1}}</span>
+                <span>${item.email}</span>
               </div>
             </td>
           </tr>
+          `).join('') }}
+          
         </table>
     </div>
 
@@ -176,7 +199,7 @@
 
     <div class="section">
         <h3>C. Título del trabajo</h3>
-        <p class="underline">{{$json.titulo_trabajo}}</p>
+        <p class="titulo-tesis">{{$json.titulo_trabajo}}</p>
     </div>
 
     <div class="section">
@@ -241,5 +264,6 @@ presente T.E.G.</p>
           `
       ).join('')  }}
       </div>
+ 
 </body>
 </html>
