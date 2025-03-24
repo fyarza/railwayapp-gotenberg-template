@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Planilla de Inscripción TEG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2cm;
+            font-size: 12px;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 0;
+        }
+        h3{
+          font-size: 14px;
+          font-weight: bold;
+        }
+
+        .header-content{
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          margin-bottom: 40px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        
+        .signature-section {
+            margin-top: 40px;
+            text-align: right;
+        }
+        
+        .underline {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            min-width: 300px;
+            margin: 5px 0;
+        }
+
+        .tutores-content{
+          display:flex;
+          justify-content:space-between;
+          align-items:center
+        }
+        .item-content {
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          justify-content:center
+        }
+    </style>
+</head>
+<body>
+  <div class="header-content">
+    <div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/UC_logo.png" alt="logo-uc" 
+      width="60px">
+    </div>
+    <div>
+      <h2>UNIVERSIDAD DE CARABOBO</h2>
+      <h2>FACULTAD EXPERIMENTAL DE CIENCIAS Y TECNOLOGÍA</h2>
+      <h2>FORMATO 1</h2>
+      <h2>PROYECTO DE TRABAJO ESPECIAL DE GRADO (TEG)</h2>
+      <h2>PLANILLA DE INSCRIPCIÓN</h2>
+    </div>
+    <div>
+      <img src="https://lh6.googleusercontent.com/proxy/WkEjlqGSaAapWne6ZuiTNOnpRELeyz9aMecod8OIjJnNC-Aj_txRFJ4Wfd4uYlTckNIeqsLCR0lsb3PU1whxqDRk3JCWsYOrcYWcNg" alt="logo-uc" 
+      width="80px">
+    </div>
+  </div>
+
+    <div class="section">
+        <h3>A. Datos del(los) Estudiante(s)</h3>
+        <table>
+          <tr>
+            <th>Nombre y Apellidos</th>
+            <th>C.I.</th>
+            <th>Teléfono / E-mail</th>
+          </tr>
+          <tr>
+            <td>Nombre: <span>{{$json.nombre_estudiante_1}}</span></td>
+            <td>C.I.: <span>{{$json.ci_estudiante_1}}</span></td>
+            <td>
+              <div>
+                <span>Teléfono: </span>
+                <span>{{$json.telefono_estudiante_1}}</span>
+              </div>
+              <div>
+                <span>E-mail: </span>
+                <span>{{$json.email_estudiante_1}}</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h3>B. Datos de los Tutores</h3>
+        <h4>De la Universidad</h4>
+        <table>
+           <tr>
+                  <th>Profesor</th>
+                  <th>Dependencia</th>
+                  <th>Teléfono / E-mail</th>
+              </tr>
+          
+          <tbody>
+            
+             {{ $json.tutores.internos.map(item => 
+               `
+               <tr>
+                  <td>${item.nombre}</td>
+                  <td>${item.dependencia}</td>
+                  <td>
+                    <div>
+                      <span>Teléfono: </span>
+                      <span>${item.telefono}</span>
+                    </div>
+                    <div>
+                      <span>E-mail: </span>
+                      <span>${item.email}</span>
+                    </div>
+          </tr>`
+                ).join('')  }}
+          </tbody>
+         
+          
+        </table>
+        
+        <h4>Externos</h4>
+      <table>
+        <tr>
+          <th>Nombre</th>
+          <th>Empresa/Instituto</th>
+          <th>Teléfono / E-mail</th>
+        </tr>
+           {{ $json.tutores.externos.map(item => {
+            return `<tr>
+                  <td>${item.nombre}</td>
+                  <td>${item.empresa}</td>
+                  <td>
+                    <div>
+                      <span>Teléfono: </span>
+                      <span>${item.telefono}</span>
+                    </div>
+                    <div>
+                      <span>E-mail: </span>
+                      <span>${item.email}</span>
+                    </div>
+                  </td>
+                  </tr>`
+            }).join('')  }}
+        </table>
+         
+    </div>
+
+    <div class="section">
+        <h3>C. Título del trabajo</h3>
+        <p class="underline">{{$json.titulo_trabajo}}</p>
+    </div>
+
+    <div class="section">
+        <h3>D. Sugerencias de Jurado</h3>
+        <table id="jurados">
+              <tr>
+                  <th>Nombre</th>
+                  <th>Institución</th>
+                  <th>Teléfono / E-mail</th>
+              </tr>
+              {{ $json.sugerencias_tutores.tutores.map(item => 
+                `<tr>
+                    <td>${item.nombre}</td>
+                    <td>${item.dependencia}</td>
+                    <td>
+                      <div>
+                        <span>Teléfono: </span>
+                        <span>${item.telefono}</span>
+                      </div>
+                      <div>
+                        <span>E-mail: </span>
+                        <span>${item.email}</span>
+                      </div>
+                    </td>
+                </tr>     
+          `
+          ).join('')  }}
+          </table>
+    </div>
+
+    <div class="section">
+        <h3>E. Compromiso Tesista-Tutor</h3>
+        <p><strong>Aceptación del estudiante:</strong> Quien suscribe, aspirante a realizar el presente T.E.G; me
+comprometo a cumplir con todo lo establecido en las Normas de T.E.G. vigentes, en particular con la
+dedicación de tiempo y esfuerzos necesarios, para la culminación del T.E.G. en el lapso establecido en
+dichas Normas.</p>
+          <p> Respuesta: {{ $if( $json.compromiso_estudiante, `<p>Aceptado</p>`,`<p>Rechazado</p>` ) }}</p>
+        <p>
+          <strong>Aceptación del(los) tutor(es):</strong>
+          Quien(es) suscribe(imos), tutore(es) del presente T.E.G; me
+(nos) comprometo(emos) a cumplir con todo lo establecido en las Normas de T.E.G. vigentes, en
+particular a garantizar la disponibilidad de los equipos y reactivos necesarios para la realización del
+presente T.E.G.</p>
+        <p> Respuesta: {{ $if( $json.compromiso_tutores, `<p>Aceptado</p>`,`<p>Rechazado</p>` ) }}</p>
+    </div>
+
+    <div class="signature-section">
+        <div class="item-content">
+        <p>_________________________</p>
+        <strong>Tesista</strong>
+        </div>
+
+     </div>
+      <div class="tutores-content"> 
+       {{ $json.tutores.internos.map(item => 
+            ` <div class="item-content"> 
+                <p>_________________________</p>
+                <div class="item-tutor-name">
+                  <strong>Tutor ${item.nombre}</strong>
+                </div>
+              </div>        
+          `
+      ).join('')  }}
+      </div>
+</body>
+</html>
