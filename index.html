@@ -24,12 +24,12 @@
       }
 
       .titulo-tesis {
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
         line-height: 1.5;
         display: inline-block;
         min-width: 100%;
-        margin: 10px 0;
+        margin: 1px 5px !important;
       }
 
       .linea-investigacion {
@@ -43,7 +43,7 @@
 
       .titulo-tesis-content {
         border: 1px solid #000;
-        padding: 5px;
+        padding: 0px;
       }
 
       .header-content {
@@ -56,14 +56,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
       }
 
       .section {
-        margin-bottom: 25px;
+        margin-bottom: 10px;
       }
       .section p {
         line-height: 1.5;
+        margin: 0px;
+      }
+
+      .compromiso {
+        font-size: 12px;
+        text-indent: 2em;
+        text-align: justify;
       }
 
       .center {
@@ -73,18 +80,18 @@
       table {
         width: 100%;
         border-collapse: collapse;
-        margin: 10px 0;
+        margin: 0px 0;
       }
 
       th,
       td {
         border: 1px solid #000;
-        padding: 8px;
+        padding: 2px 8px;
         vertical-align: top;
       }
 
       .signature-section {
-        margin-top: 40px;
+        margin-top: 20px;
         text-align: right;
       }
 
@@ -108,7 +115,7 @@
         justify-content: center;
       }
       .ciudadano {
-        margin-bottom: 40px;
+        margin-bottom: 25px;
         line-height: 0.5;
       }
     </style>
@@ -157,22 +164,15 @@
         <tr>
           <th>Nombre y Apellidos</th>
           <th>C.I.</th>
-          <th>Teléfono / E-mail</th>
+          <th>Datos de contacto</th>
         </tr>
 
         {{ $json.tesistas.estudiantes.map(item => `
         <tr>
-          <td>Nombre: <span>${item.nombre}</span></td>
-          <td>C.I.: <span>${item.ci}</span></td>
-          <td>
-            <div>
-              <span>Teléfono: </span>
-              <span>${item.telefono}</span>
-            </div>
-            <div>
-              <span>E-mail: </span>
-              <span>${item.email}</span>
-            </div>
+          <td>${item.nombre}</td>
+          <td>${item.ci}</td>
+          <td class="center">
+            <a href="mailto:${item.email}">${item.email}</a>
           </td>
         </tr>
         `).join('') }}
@@ -197,23 +197,16 @@
         <tr>
           <th>Profesor</th>
           <th>Dependencia</th>
-          <th>Teléfono / E-mail</th>
+          <th>Datos de contacto</th>
         </tr>
 
         <tbody>
           {{ $json.tutores.internos.map(item => `
           <tr>
             <td>${item.nombre}</td>
-            <td>${item.dependencia}</td>
-            <td>
-              <div>
-                <span>Teléfono: </span>
-                <span>${item.telefono}</span>
-              </div>
-              <div>
-                <span>E-mail: </span>
-                <span>${item.email}</span>
-              </div>
+            <td class="center">${item.dependencia}</td>
+            <td class="center">
+              <a href="mailto:${item.email}">${item.email}</a>
             </td>
           </tr>
 
@@ -236,21 +229,14 @@
         <tr>
           <th>Nombre</th>
           <th>Institución</th>
-          <th>Teléfono / E-mail</th>
+          <th>Datos de contacto</th>
         </tr>
         {{ $json.sugerencias_tutores.tutores.map(item => `
         <tr>
           <td class="center">${item.nombre}</td>
           <td class="center">${item.dependencia}</td>
-          <td>
-            <div>
-              <span>Teléfono: </span>
-              <span>${item.telefono}</span>
-            </div>
-            <div>
-              <span>E-mail: </span>
-              <span>${item.email}</span>
-            </div>
+          <td class="center">
+            <a href="mailto:${item.email}">${item.email}</a>
           </td>
         </tr>
         ` ).join('') }}
@@ -259,14 +245,14 @@
 
     <div class="section">
       <p>Compromiso Tesistas-Tutores</p>
-      <p>
+      <p class="compromiso">
         Aceptación del estudiante: Quien suscribe, aspirante a realizar el
         presente T.E.G; me comprometo a cumplir con todo lo establecido en las
         Normas de T.E.G. vigentes, en particular con la dedicación de tiempo y
         esfuerzos necesarios, para la culminación del T.E.G. en el lapso
         establecido en dichas Normas.
       </p>
-      <p>
+      <p class="compromiso">
         Aceptación del(los) tutor(es): Quien(es) suscribe(imos), tutore(es) del
         presente T.E.G; me (nos) comprometo(emos) a cumplir con todo lo
         establecido en las Normas de T.E.G. vigentes, en particular a garantizar
