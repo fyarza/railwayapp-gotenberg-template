@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Planilla de Inscripción TEG</title>
+    <style>
+      body {
+        font-family: "Times New Roman", sans-serif;
+        font-size: 12px;
+        margin: auto 20px;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+        margin: 20px 0;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 0;
+      }
+      h3 {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .titulo-tesis {
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 1.5;
+        display: inline-block;
+        min-width: 100%;
+        margin: 1px 5px !important;
+      }
+
+      .linea-investigacion {
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 1.5;
+        display: inline-block;
+        min-width: 100%;
+        border-bottom: 1px solid #000;
+      }
+
+      .titulo-tesis-content {
+        border: 1px solid #000;
+        padding: 0px;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+      .fecha {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .section {
+        margin-bottom: 10px;
+      }
+      .section p {
+        line-height: 1.5;
+        margin: 0px;
+      }
+
+      .compromiso {
+        font-size: 12px;
+        text-indent: 2em;
+        text-align: justify;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0px 0;
+      }
+
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 2px 8px;
+        vertical-align: top;
+      }
+
+      .signature-section {
+        margin-top: 20px;
+        text-align: right;
+      }
+
+      .underline {
+        border-bottom: 1px solid #000;
+        display: inline-block;
+        min-width: 300px;
+        margin: 5px 0;
+      }
+
+      .tutores-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .item-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .ciudadano {
+        margin-bottom: 25px;
+        line-height: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-content">
+      <div>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/UC_logo.png"
+          alt="logo-uc"
+          width="60px"
+        />
+      </div>
+      <div>
+        <h2>UNIVERSIDAD DE CARABOBO</h2>
+        <h2>FACULTAD EXPERIMENTAL DE CIENCIAS Y TECNOLOGÍA</h2>
+        <h2>MONOGRAFÍA DE TRABAJO ESPECIAL DE GRADO (TEG)</h2>
+        <h2>SEGUNDA ETAPA: SOLICITUD DE DEFENSA</h2>
+      </div>
+      <div>
+        <img
+          src="https://lh6.googleusercontent.com/proxy/WkEjlqGSaAapWne6ZuiTNOnpRELeyz9aMecod8OIjJnNC-Aj_txRFJ4Wfd4uYlTckNIeqsLCR0lsb3PU1whxqDRk3JCWsYOrcYWcNg"
+          alt="logo-uc"
+          width="80px"
+        />
+      </div>
+    </div>
+    <div class="fecha">
+      <span>Nro.___________________________</span>
+      <span>Naguanagua, {{ $now.format('dd/MM/yyyy') }}</span>
+    </div>
+    <div class="ciudadano">
+      <p>Ciudadano:</p>
+      <p>Prof.(a) {{ $json.director_departamento }}</p>
+      <p>Director-Presidente y demás miembros</p>
+      <p>del Departamento de Computación</p>
+    </div>
+
+    <div class="section">
+      <p>
+        Tengo a bien dirigirme a ustedes en la oportunidad de comunicarles que
+        los estudiantes:
+      </p>
+      <table>
+        <tr>
+          <th>Nombre y Apellidos</th>
+          <th>C.I.</th>
+          <th>Datos de contacto</th>
+        </tr>
+
+        {{ $json.tesistas.estudiantes.map(item => `
+        <tr>
+          <td>${item.nombre}</td>
+          <td>${item.ci}</td>
+          <td class="center">
+            <a href="mailto:${item.email}">${item.email}</a>
+          </td>
+        </tr>
+        `).join('') }}
+      </table>
+    </div>
+
+    <div class="section">
+      <p>
+        Hacen entrega, para su posterior evaluación, de dos(02) ejemplares
+        impresos y un (01) ejemplar en formato digital (PDF) de su Monografía de
+        TEG, según lo establecido en el Artículo 13 del las Normas para la
+        Elaboración, Presentación y Evaluación del TEG; dicho TEG se titula:
+      </p>
+      <div class="titulo-tesis-content">
+        <p class="titulo-tesis">{{$json.titulo_trabajo}}</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <p>Desarrollado bajo la tutoría académica de:</p>
+      <table>
+        <tr>
+          <th>Profesor</th>
+          <th>C.I.</th>
+          <th>Dependencia</th>
+          <th>Datos de contacto</th>
+        </tr>
+
+        <tbody>
+          {{ $json.tutores.internos.map(item => `
+          <tr>
+            <td>${item.nombre}</td>
+            <td class="center">${item.ci}</td>
+            <td class="center">${item.dependencia}</td>
+            <td class="center">
+              <a href="mailto:${item.email}">${item.email}</a>
+            </td>
+          </tr>
+
+          ` ).join('') }}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <p>Enmarcado en la(s) siguiente(s) línea(s) de investigación:</p>
+      <p class="linea-investigacion">{{$json.lineas_investigacion}}</p>
+    </div>
+
+    <div class="section">
+      <p>
+        El Proyecto de TEG fue considerado y aprobado en presentación pública
+        por el siguiente jurado: {{ $json.jurado_evaluador1 $json.rol_evaluador1
+        }} {{ $json.jurado_evaluador2 $json.rol_evaluador2 }} {{
+        $json.jurado_evaluador3 $json.rol_evaluador3 }}., con fecha de {{
+        $json.fecha_defensa }}. Se sugiere, muy respetuosamente, la designación
+        del siguiente jurado evaluador:
+      </p>
+      <table id="jurados">
+        <tr>
+          <th>Nombre</th>
+          <th>Institución</th>
+          <th>Datos de contacto</th>
+        </tr>
+        {{ $json.sugerencias_tutores.tutores.map(item => `
+        <tr>
+          <td class="center">${item.nombre}</td>
+          <td class="center">${item.dependencia}</td>
+          <td class="center">
+            <a href="mailto:${item.email}">${item.email}</a>
+          </td>
+        </tr>
+        ` ).join('') }}
+      </table>
+    </div>
+
+    <div class="section">
+      <p>Atentamente,</p>
+    </div>
+
+    <div class="signature-section">
+      <div class="item-content">
+        <p>_________________________</p>
+        <strong>Tesista</strong>
+      </div>
+    </div>
+    <div class="tutores-content">
+      {{ $json.tutores.internos.map(item => `
+      <div class="item-content">
+        <p>_________________________</p>
+        <div class="item-tutor-name">
+          <strong>Tutor ${item.nombre}</strong>
+        </div>
+      </div>
+      ` ).join('') }}
+    </div>
+  </body>
+</html>
